@@ -1,3 +1,9 @@
 from django.shortcuts import render
+from django.views.generic import ListView
 
-# Create your views here.
+
+def HomeView(request):
+    return render(request, "home.html")
+    # model = Item
+    # paginate_by = 10
+    # template_name = "home.html"
