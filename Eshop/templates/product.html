@@ -11,7 +11,7 @@
         <!--Grid column-->
         <div class="col-md-6 mb-4">
 
-          <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/14.jpg" class="img-fluid" alt="">
+          <img src="{{item.img1.url}}" class="img-fluid" alt="">
 
         </div>
         <!--Grid column-->
@@ -41,7 +41,7 @@
 
             <p class="lead font-weight-bold">Description</p>
 
-            <p>{{ object.description }}</p>
+            <p>{% lorem %}</p>
 
             {% comment %} <form class="d-flex justify-content-left">
               <!-- Default input -->

@@ -46,8 +46,10 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'crispy_forms',
 
     'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.facebook',
 
     'core',
 ]
@@ -176,8 +178,8 @@ if DEBUG:
         'SHOW_TOOLBAR_CALLBACK': show_toolbar
     }
 
-LOGIN_REDIRECT_URL = '/admin'
-LOGOUT_REDIRECT_URL = '/admin'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 
 # Social providers
 SOCIALACCOUNT_PROVIDERS = {
@@ -191,3 +193,8 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+SESSION_COOKIE_AGE = 5*60
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

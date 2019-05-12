@@ -1,12 +1,15 @@
+from io import BytesIO
+import sys
+
+from django.dispatch import receiver
+from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.conf import settings
 from django.db import models
 from django.shortcuts import reverse
 
-CATEGORY_CHOICES = (
-    ('S', 'Shirt'),
-    ('SW', 'Sport wear'),
-    ('OW', 'Outwear')
-)
+from PIL import Image, ImageOps
+
+
 
 LABEL_CHOICES = (
     ('P', 'primary'),
@@ -14,13 +17,19 @@ LABEL_CHOICES = (
     ('D', 'danger')
 )
 
+class Category(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
 
 class Item(models.Model):
     title = models.CharField(max_length=100)
-    price = models.FloatField()
+    price = models.IntegerField()
     discount_price = models.FloatField(blank=True, null=True)
-    category = models.CharField(choices=CATEGORY_CHOICES, max_length=2)
+    category = models.ForeignKey(Category, on_delete=models.DO_NOTHING)
     label = models.CharField(choices=LABEL_CHOICES, max_length=1)
+    img1 = models.ImageField(upload_to='item/')
     slug = models.SlugField()
     description = models.TextField()
 
@@ -41,6 +50,16 @@ class Item(models.Model):
         return reverse("core:remove-from-cart", kwargs={
             'slug': self.slug
         })
+
+    def save(self, *args, **kwargs):
+        image = Image.open(self.img1)
+        outputIoStream = BytesIO()
+        newImage = image.resize((1920, 1280))
+        newImage.save(outputIoStream, format='JPEG', quality=90)
+        outputIoStream.seek(0)
+        print(outputIoStream.seek(0))
+        self.img1 = InMemoryUploadedFile(outputIoStream,'ImageField', "%s.jpg" %self.img1.name.split('.')[0], 'image/jpeg', sys.getsizeof(outputIoStream), None)
+        super(Item, self).save(*args, **kwargs)
 
 
 class OrderItem(models.Model):
