@@ -218,7 +218,11 @@
                 <h5>
                   <strong>
                     <a href="{{ item.get_absolute_url }}" class="dark-grey-text">{{ item.title }}
-                      <span class="badge badge-pill {{ item.get_label_display }}-color">NEW</span>
+                    {% if item.get_label_display == 'New' %}
+                      <span class="badge badge-pill primary-color">NEW</span>
+                    {% elif item.get_label_display == 'Solde' %}
+                      <span class="badge badge-pill danger-color">SOLDE</span>
+                    {% endif %}
                     </a>
                   </strong>
                 </h5>
