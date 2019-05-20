@@ -6,7 +6,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, View
 from django.shortcuts import redirect
 from django.utils import timezone
-from .models import Item, OrderItem, Order
+from .models import Item, OrderItem, Order, Category
 
 def products(request):
     context = {
@@ -20,9 +20,35 @@ def checkout(request):
 
 
 class HomeView(ListView):
-    model = Item
-    paginate_by = 9
+    context_object_name = "items"
+    paginate_by = 8
     template_name = "home.html"
+
+    def get_queryset(self):
+        return Item.objects.all()
+        
+    def get_context_data(self, **kwargs):
+        context = super(HomeView, self).get_context_data(**kwargs)
+        context["categorys"]= Category.objects.order_by('name')
+        context["carousel"]= Item.objects.filter(label="NEW").order_by('title')
+        return context
+
+
+class HomeViewCategory(ListView):
+    context_object_name = "items"
+    paginate_by = 8
+    template_name = "home.html"
+
+    def get_queryset(self):
+        self.items = get_object_or_404(Category, name=self.kwargs['category'])
+        return Item.objects.filter(category__name=self.items)
+        
+    def get_context_data(self, **kwargs):
+        context = super(HomeViewCategory, self).get_context_data(**kwargs)
+        context["categorys"]= Category.objects.order_by('name')
+        context["carousel"]= Item.objects.filter(label="NEW")
+        return context
+    
 
 
 class OrderSummaryView(LoginRequiredMixin, View):

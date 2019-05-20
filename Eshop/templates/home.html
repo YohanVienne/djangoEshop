@@ -1,8 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
+
   <!--Carousel Wrapper-->
-  <div id="carousel-example-1z" class="carousel slide carousel-fade pt-4" data-ride="carousel">
+  <div id="carousel-example-1z" class="carousel slide carousel-fade " data-ride="carousel">
 
     <!--Indicators-->
     <ol class="carousel-indicators">
@@ -11,120 +12,33 @@
       <li data-target="#carousel-example-1z" data-slide-to="2"></li>
     </ol>
     <!--/.Indicators-->
-
     <!--Slides-->
     <div class="carousel-inner" role="listbox">
 
+      {% for item in carousel %}
       <!--First slide-->
+      {% if forloop.first %}
       <div class="carousel-item active">
-        <div class="view" style="background-image: url('https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/8-col/img%282%29.jpg'); background-repeat: no-repeat; background-size: cover;">
-
-          <!-- Mask & flexbox options-->
-          <div class="mask rgba-black-strong d-flex justify-content-center align-items-center">
+      {% else %}
+      <div class="carousel-item">
+      {% endif %}
+        <div class="view" style="background-image: url({{item.img1.url}}); height: 100vh; background-repeat: no-repeat center center scroll; background-size: cover;">
 
             <!-- Content -->
-            <div class="text-center white-text mx-5 wow fadeIn">
-              <h1 class="mb-4">
-                <strong>Learn Bootstrap 4 with MDB</strong>
+            <div class=" white-text mx-5 wow fadeIn">
+              <h1 class="display-4">
+                <strong>NEW COLLECTION</strong>
               </h1>
-
-              <p>
-                <strong>Best & free guide of responsive web design</strong>
-              </p>
-
-              <p class="mb-4 d-none d-md-block">
-                <strong>The most comprehensive tutorial for the Bootstrap 4. Loved by over 500 000 users. Video and
-                  written versions
-                  available. Create your own, stunning website.</strong>
-              </p>
-
-              <a target="_blank" href="https://mdbootstrap.com/education/bootstrap/" class="btn btn-outline-white btn-lg">Start
-                free tutorial
-                <i class="fas fa-graduation-cap ml-2"></i>
+              <h3 class="fadeIn">{{ item.title }}</h3>
+              <a target="_blank" href="{{ item.get_absolute_url }}" class="btn btn-lg shadow-none ">See this model
               </a>
             </div>
             <!-- Content -->
-
-          </div>
-          <!-- Mask & flexbox options-->
 
         </div>
       </div>
       <!--/First slide-->
-
-      <!--Second slide-->
-      <div class="carousel-item">
-        <div class="view" style="background-image: url('https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/8-col/img%283%29.jpg'); background-repeat: no-repeat; background-size: cover;">
-
-          <!-- Mask & flexbox options-->
-          <div class="mask rgba-black-strong d-flex justify-content-center align-items-center">
-
-            <!-- Content -->
-            <div class="text-center white-text mx-5 wow fadeIn">
-              <h1 class="mb-4">
-                <strong>Learn Bootstrap 4 with MDB</strong>
-              </h1>
-
-              <p>
-                <strong>Best & free guide of responsive web design</strong>
-              </p>
-
-              <p class="mb-4 d-none d-md-block">
-                <strong>The most comprehensive tutorial for the Bootstrap 4. Loved by over 500 000 users. Video and
-                  written versions
-                  available. Create your own, stunning website.</strong>
-              </p>
-
-              <a target="_blank" href="https://mdbootstrap.com/education/bootstrap/" class="btn btn-outline-white btn-lg">Start
-                free tutorial
-                <i class="fas fa-graduation-cap ml-2"></i>
-              </a>
-            </div>
-            <!-- Content -->
-
-          </div>
-          <!-- Mask & flexbox options-->
-
-        </div>
-      </div>
-      <!--/Second slide-->
-
-      <!--Third slide-->
-      <div class="carousel-item">
-        <div class="view" style="background-image: url('https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/8-col/img%285%29.jpg'); background-repeat: no-repeat; background-size: cover;">
-
-          <!-- Mask & flexbox options-->
-          <div class="mask rgba-black-strong d-flex justify-content-center align-items-center">
-
-            <!-- Content -->
-            <div class="text-center white-text mx-5 wow fadeIn">
-              <h1 class="mb-4">
-                <strong>Learn Bootstrap 4 with MDB</strong>
-              </h1>
-
-              <p>
-                <strong>Best & free guide of responsive web design</strong>
-              </p>
-
-              <p class="mb-4 d-none d-md-block">
-                <strong>The most comprehensive tutorial for the Bootstrap 4. Loved by over 500 000 users. Video and
-                  written versions
-                  available. Create your own, stunning website.</strong>
-              </p>
-
-              <a target="_blank" href="https://mdbootstrap.com/education/bootstrap/" class="btn btn-outline-white btn-lg">Start
-                free tutorial
-                <i class="fas fa-graduation-cap ml-2"></i>
-              </a>
-            </div>
-            <!-- Content -->
-
-          </div>
-          <!-- Mask & flexbox options-->
-
-        </div>
-      </div>
-      <!--/Third slide-->
+      {% endfor %}
 
     </div>
     <!--/.Slides-->
@@ -145,10 +59,9 @@
 
   <!--Main layout-->
   <main>
-    <div class="container">
 
       <!--Navbar-->
-      <nav class="navbar navbar-expand-lg navbar-dark mdb-color lighten-3 mt-3 mb-5">
+      <nav id="navbarItems" class="navbar navbar-expand-lg navbar-dark mt-1 mb-5" style="background-color: grey;">
 
         <!-- Navbar brand -->
         <span class="navbar-brand">Categories:</span>
@@ -164,20 +77,18 @@
 
           <!-- Links -->
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">All
+            <li class="nav-item">
+              <a class="nav-link" href="/">All
                 <span class="sr-only">(current)</span>
               </a>
             </li>
+          {% for category in categorys %}
             <li class="nav-item">
-              <a class="nav-link" href="#">Shirts</a>
+              <a class="nav-link" href="/{{category.name}}">{{category.name}}
+                <span class="sr-only">(current)</span>
+              </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Sport wears</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Outwears</a>
-            </li>
+          {% endfor %}
 
           </ul>
           <!-- Links -->
@@ -193,12 +104,11 @@
       </nav>
       <!--/.Navbar-->
 
+    <div class="container"  data-spy="scroll" data-target="#navbarItems">
       <!--Section: Products v.3-->
       <section class="text-center mb-4">
-
         <div class="row wow fadeIn">
-
-          {% for item in object_list %}
+          {% for item in items %}
           <div class="col-lg-3 col-md-6 mb-4">
 
             <div class="card">
