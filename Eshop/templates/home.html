@@ -22,20 +22,21 @@
       {% else %}
       <div class="carousel-item">
       {% endif %}
+      <a target="_blank" href="{{ item.get_absolute_url }}" >
         <div class="view" style="background-image: url({{item.img1.url}}); height: 100vh; background-repeat: no-repeat center center scroll; background-size: cover;">
 
             <!-- Content -->
-            <div class=" white-text mx-5 wow fadeIn">
+            <div class=" white-text wow fadeIn m-3">
               <h1 class="display-4">
                 <strong>NEW COLLECTION</strong>
               </h1>
               <h3 class="fadeIn">{{ item.title }}</h3>
-              <a target="_blank" href="{{ item.get_absolute_url }}" class="btn btn-lg shadow-none ">See this model
-              </a>
+              
             </div>
             <!-- Content -->
 
         </div>
+      </a>
       </div>
       <!--/First slide-->
       {% endfor %}

@@ -53,15 +53,6 @@ class Item(models.Model):
             'slug': self.slug
         })
 
-    # def save(self, *args, **kwargs):
-    #     image = Image.open(self.img1)
-    #     outputIoStream = BytesIO()
-    #     newImage = image.resize((1920, 1280))
-    #     newImage.save(outputIoStream, format='JPEG', quality=90)
-    #     outputIoStream.seek(0)
-    #     self.img1 = InMemoryUploadedFile(outputIoStream,'ImageField', "%s-img1.jpg" %self.title, 'image/jpeg', sys.getsizeof(outputIoStream), None)
-    #     super(Item, self).save(*args, **kwargs)
-
 
 @receiver(models.signals.post_delete, sender=Item)
 def auto_delete_file_on_delete(sender, instance, **kwargs):
